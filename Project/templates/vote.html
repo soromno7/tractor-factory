@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>KEKW</title>
+  </head>
+  <body>
+    <a href="/">Вернуться в личный кабинет</a>
+    {%for foo in vote%}
+      <h3>{{foo.partA.name}} Описание:{{foo.partA.description}} Цена комплектующего:{{foo.partA.price}}</h3>
+      <h3>{{foo.partB.name}} Описание:{{foo.partB.description}} Цена комплектующего:{{foo.partB.price}}</h3>
+      <h3>{{foo.partC.name}} Описание:{{foo.partC.description}} Цена комплектующего:{{foo.partC.price}}</h3>
+    {%endfor%}
+    <form method="POST">
+      {% csrf_token %}
+      {% comment %} <table> {% endcomment %}
+        {{ form }}
+      {% comment %} </table> {% endcomment %}
+      <input type="submit" value="Send" />
+    </form>
+    
+  </body>
+</html>
