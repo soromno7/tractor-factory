@@ -1,6 +1,5 @@
 from django import forms
 
-
 class KondorseForm(forms.Form):
     CHOICES = (
         ('1', 'A'),

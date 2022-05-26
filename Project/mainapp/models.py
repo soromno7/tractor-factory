@@ -2,12 +2,9 @@ from django.db import models
 from django.contrib.auth.models import User, auth
 # Create your models here.
 
-
-
 class IsVoited(models.Model):
     user = models.CharField(max_length = 100)
     is_voted = models.BooleanField()
-
 
 class Part(models.Model):
     def __str__(self):

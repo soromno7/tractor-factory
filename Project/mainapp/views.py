@@ -82,7 +82,7 @@ def part_ordered_price(request):
     return render(request, 'part.html', context=data)
 
 def part_filtrated(request):
-    parts = Part.objects.filter(price__lte =100)
+    parts = Part.objects.filter(price__lte = 100)
     data = {"parts": parts}
     return render(request, 'part.html', context=data)
 
@@ -150,7 +150,7 @@ def kondorse(request):
         response = "Наилучшие комплектующие - B"
     if a3 > a1 and a3 > a2:
         response = "Наилучшие комплектующие - C"
-    data = {"a1":a1, "a2":a2, "a3":a3, "response":response, "arr": arr}
+    data = {"a1":a1, "a2":a2, "a3":a3, "response":response, "arr0": arr[0], "arr1": arr[1], "arr2": arr[2]}
     return render(request, 'index.html', context=data)
 
 

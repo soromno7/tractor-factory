@@ -1,13 +1,23 @@
+{% load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Мой сайт</title>
+    <title>Каталог комплектующих</title>
 </head>
 <body>
+    <a href="/">Вернуться в личный кабинет</a>
+    <br>
+    <a href="/part_ordered_name">Отсортировать по названию</a>
+    <br>
+    <a href="part_ordered_price">Отсортировать по возрастанию цены</a>
+    <br>
+    <a href="part_filtrated">Вывести комплектующие, стоимость которых меньше 100</a>
     {%for part in parts%}
-        <h3>{{part.name}}</h3>
-        <h3>{{part.price}}</h3>
+        <h2>Название комплектующего: {{part.name}}</h2>
+        <h3>{{part.description}}</h3>
+        <h3>Цена: {{part.price}}</h3>
+        <br>
     {%endfor%}
 </body>
 </html>
