@@ -5,7 +5,7 @@ from django.contrib import messages
 from .models import IsVoited, Part, Kondorse, Vote
 from .forms import  KondorseForm
 from django.contrib.auth.decorators import login_required
-# Create your views here.
+# Create your views here.8
 
 @login_required(login_url='login')
 def index(request):
@@ -15,10 +15,14 @@ def index(request):
 
     return render(request, 'index.html', context=data)
 
-
-
-#Register/Login
-
+# Базовый класс
+class Karasik():
+    def sort_by_name(self):
+        pass
+    def sort_by_price(self):
+        pass
+    def filter_by_param(self):
+        pass
 
 def register(request):
     if request.method == 'POST':
@@ -47,20 +51,23 @@ def register(request):
         return render(request, 'register.html')
 
 def login(request):
-     if request.method == 'POST':
-         username = request.POST['username']
-         password = request.POST['password']
+     try:
+        if request.method == 'POST':
+            username = request.POST['username']
+            password = request.POST['password']
 
-         user = auth.authenticate(username=username, password=password)
+            user = auth.authenticate(username=username, password=password)
 
-         if user is not None:
-             auth.login(request, user)
-             return redirect('/')
-         else:
+            if user is not None:
+                auth.login(request, user)
+                return redirect('/')
+            else:
 
-            return redirect ('login')
-     else:
-        return render(request, 'login.html')
+                return redirect ('login')
+        else:
+            return render(request, 'login.html')
+     except:
+         print("Обнаружена ошибка")
 
 def logout(request):
     auth.logout(request)
@@ -71,18 +78,34 @@ def part(request):
     data = {"parts": parts}
     return render(request, 'part.html', context=data)
 
+class Sort_by_name_class(Karasik):
+    def sort_by_name(self):
+        parts = Part.objects.order_by('name')
+        return parts
+class Sort_by_price_class(Karasik):
+    def sort_by_price(self):
+        parts = Part.objects.order_by('price')
+        return parts
+class Filter_by_param_class(Karasik):
+    def filter_by_param(self):
+        parts = Part.objects.filter(price__lte = 100)
+        return parts
+ 
 def part_ordered_name(request):
-    parts = Part.objects.order_by('name')
+    parts2 = Sort_by_name_class()
+    parts = parts2.sort_by_name()
     data = {"parts": parts}
     return render(request, 'part.html', context=data)
 
 def part_ordered_price(request):
-    parts = Part.objects.order_by('price')
+    parts2 = Sort_by_price_class()
+    parts = parts2.sort_by_price()
     data = {"parts": parts}
     return render(request, 'part.html', context=data)
 
 def part_filtrated(request):
-    parts = Part.objects.filter(price__lte = 100)
+    parts2 = Filter_by_param_class()
+    parts = parts2.filter_by_param()
     data = {"parts": parts}
     return render(request, 'part.html', context=data)
 
@@ -144,11 +167,11 @@ def kondorse(request):
     a2 = arr[1][0] + arr[1][1] + arr[1][2]
     a3 = arr[2][0] + arr[2][1] + arr[2][2]
     respose = ""
-    if a1 > a2 and a1 > a3:
+    if a1 >= a2 and a1 >= a3:
         response = "Наилучшие комплектующие - A"
-    if a2 > a1 and a2 > a3:
+    if a2 >= a1 and a2 >= a3:
         response = "Наилучшие комплектующие - B"
-    if a3 > a1 and a3 > a2:
+    if a3 >= a1 and a3 >= a2:
         response = "Наилучшие комплектующие - C"
     data = {"a1":a1, "a2":a2, "a3":a3, "response":response, "arr0": arr[0], "arr1": arr[1], "arr2": arr[2]}
     return render(request, 'index.html', context=data)
